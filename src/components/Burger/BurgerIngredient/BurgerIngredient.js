@@ -12,8 +12,9 @@ export const BACON = "BACON";
 export const SALAD = "SALAD";
 
 const BurgerIngredient = props => {
+  const { type } = props;
   let ingredient = null;
-  switch (props.type) {
+  switch (type) {
     case BREAD_BOTTOM:
       ingredient = <div className={classes.BreadBottom}> </div>;
       break;

@@ -6,7 +6,7 @@ import Button from "../../UI/Button/Button";
 
 const OrderSummary = props => {
   const { ingredients, price, purchaseCancelled, purchaseContinued } = props;
-  const ingredientSummary = Object.keys(props.ingredients).map(igKey => (
+  const ingredientSummary = Object.keys(ingredients).map(igKey => (
     <li key={igKey}>
       <span style={{ textTransform: "capitalize" }}>{igKey}</span>:{" "}
       {ingredients[igKey]}
