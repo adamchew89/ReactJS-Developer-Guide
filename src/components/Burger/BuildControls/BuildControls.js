@@ -70,13 +70,13 @@ BuildControls.propTypes = {
   removeIngredient: PropTypes.func.isRequired,
   ordered: PropTypes.func.isRequired,
   purchaseable: PropTypes.bool,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.object,
   currentPrice: PropTypes.number
 };
 
 BuildControls.defaultProps = {
   purchaseable: false,
-  disabled: true,
+  disabled: {},
   currentPrice: 0.0
 };
 
