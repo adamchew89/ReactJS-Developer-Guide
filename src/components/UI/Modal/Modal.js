@@ -9,8 +9,8 @@ import Backdrop from "../Backdrop/Backdrop";
 class Modal extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     // Updates only if Modal is shown in UI
-    const { show } = this.props;
-    return show !== nextProps.show;
+    const { show, children } = this.props;
+    return show !== nextProps.show || nextProps.children !== children;
   }
 
   render() {
