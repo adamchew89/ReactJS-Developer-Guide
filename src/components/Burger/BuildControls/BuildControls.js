@@ -12,24 +12,7 @@ import {
   BACON
 } from "../BurgerIngredient/BurgerIngredient";
 
-const controls = [
-  {
-    label: "Meat",
-    type: MEAT
-  },
-  {
-    label: "Cheese",
-    type: CHEESE
-  },
-  {
-    label: "Salad",
-    type: SALAD
-  },
-  {
-    label: "Bacon",
-    type: BACON
-  }
-];
+const controls = [MEAT, CHEESE, SALAD, BACON];
 
 const BuildControls = props => {
   const {
@@ -47,11 +30,11 @@ const BuildControls = props => {
       </p>
       {controls.map(control => (
         <BuildControl
-          key={control.label}
-          label={control.label}
-          disabled={disabled[control.type]}
-          added={() => addIngredient(control.type)}
-          removed={() => removeIngredient(control.type)}
+          key={control}
+          label={`${control.charAt(0).toUpperCase()}${control.slice(1).toLowerCase()}`}
+          disabled={disabled[control]}
+          added={() => addIngredient(control)}
+          removed={() => removeIngredient(control)}
         />
       ))}
       <button

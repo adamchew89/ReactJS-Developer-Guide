@@ -27,7 +27,7 @@ export const INGREDIENT_PRICES = {
 class BurgerBuilder extends Component {
   state = {
     totalPrice: 4,
-    purchaseable: false,
+    purchaseable: true,
     purchasing: false,
     loading: false,
     error: false
@@ -100,26 +100,19 @@ class BurgerBuilder extends Component {
 
   purchaseContinueHandler = () => {
     const { ingredients, totalPrice } = this.state;
-    const order = {
-      ingredients,
-      totalPrice,
-      customer: {
-        name: "Adam Chew",
-        address: {
-          street: "80 Boon Keng Road",
-          postal: "668080",
-          country: "Singapore"
-        },
-        email: "AdamChew@mail.com",
-        deliveryMethod: "fastest"
-      }
-    };
-    this.setState({ loading: true });
-    axios
-      .post("/orders.json", order)
-      .then(response => response)
-      .catch(error => error)
-      .finally(() => this.setState({ purchasing: false, loading: false }));
+    const { history } = this.props;
+    const queryParams = [];
+    for (let i in ingredients) {
+      queryParams.push(
+        `${encodeURIComponent(i)}=${encodeURIComponent(ingredients[i])}`
+      );
+    }
+    queryParams.push(`price=${encodeURIComponent(totalPrice)}`);
+    const queryString = queryParams.join("&");
+    history.push({
+      pathname: "/checkout",
+      search: `?${queryString}`
+    });
   };
 
   render() {

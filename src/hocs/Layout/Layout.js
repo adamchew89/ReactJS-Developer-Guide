@@ -2,7 +2,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 // CSS
-import classes from "./Layout.css";
+import classes from "./Layout.module.css";
 // Components
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
