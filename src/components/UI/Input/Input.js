@@ -8,13 +8,25 @@ import classes from "./Input.module.css";
 // Components
 
 const Input = props => {
-  const { elementConfig, elementType, value, changed } = props;
+  const {
+    elementConfig,
+    elementType,
+    value,
+    changed,
+    invalid,
+    shouldValidate,
+    touched
+  } = props;
   let inputEl = null;
+  const inputClasses = [classes.InputEl];
+  if (invalid && shouldValidate && touched) {
+    inputClasses.push(classes.Invalid);
+  }
   switch (elementType) {
     case "input":
       inputEl = (
         <input
-          className={classes.InputEl}
+          className={inputClasses.join(" ")}
           {...elementConfig}
           value={value}
           onChange={changed}
@@ -24,7 +36,7 @@ const Input = props => {
     case "textarea":
       inputEl = (
         <textarea
-          className={classes.InputEl}
+          className={inputClasses.join(" ")}
           {...elementConfig}
           value={value}
           onChange={changed}
@@ -33,7 +45,11 @@ const Input = props => {
       break;
     case "select":
       inputEl = (
-        <select className={classes.InputEl} value={value} onChange={changed}>
+        <select
+          className={inputClasses.join(" ")}
+          value={value}
+          onChange={changed}
+        >
           {elementConfig.options.map(option => (
             <option key={option.value} value={option.value}>
               {option.displayValue}
@@ -45,7 +61,7 @@ const Input = props => {
     default:
       inputEl = (
         <input
-          className={classes.InputEl}
+          className={inputClasses.join(" ")}
           {...elementConfig}
           value={value}
           onChange={changed}
@@ -65,14 +81,20 @@ Input.propTypes = {
   changed: PropTypes.func,
   elementConfig: PropTypes.object,
   elementType: PropTypes.string,
-  value: PropTypes.string
+  value: PropTypes.string,
+  invalid: PropTypes.bool,
+  shouldValidate: PropTypes.bool,
+  touched: PropTypes.bool
 };
 
 Input.defaultProps = {
   changed: () => {},
   elementConfig: {},
   elementType: "",
-  value: ""
+  value: "",
+  invalid: false,
+  shouldValidate: false,
+  touched: false
 };
 
 export default Input;

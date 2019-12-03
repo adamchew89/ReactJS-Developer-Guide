@@ -12,6 +12,7 @@ import Input from "../../../components/UI/Input/Input";
 class ContactData extends Component {
   state = {
     loading: false,
+    formIsValid: false,
     orderForm: {
       name: {
         elementType: "input",
@@ -23,6 +24,7 @@ class ContactData extends Component {
         validation: {
           required: true
         },
+        touched: false,
         valid: false
       },
       address: {
@@ -35,6 +37,7 @@ class ContactData extends Component {
         validation: {
           required: true
         },
+        touched: false,
         valid: false
       },
       postal: {
@@ -49,6 +52,7 @@ class ContactData extends Component {
           minLength: 6,
           maxLength: 6
         },
+        touched: false,
         valid: false
       },
       country: {
@@ -61,6 +65,7 @@ class ContactData extends Component {
         validation: {
           required: true
         },
+        touched: false,
         valid: false
       },
       email: {
@@ -73,6 +78,7 @@ class ContactData extends Component {
         validation: {
           required: true
         },
+        touched: false,
         valid: false
       },
       deliveryMethod: {
@@ -83,7 +89,9 @@ class ContactData extends Component {
             { value: "cheapest", displayValue: "Cheapest" }
           ]
         },
-        value: ""
+        value: "fastest",
+        validation: {},
+        valid: true
       }
     }
   };
@@ -120,6 +128,7 @@ class ContactData extends Component {
     const updatedFormEl = { ...updatedForm[inputId] };
     // Updating the cloned nested structure
     updatedFormEl.value = event.target.value;
+    updatedFormEl.touched = true;
     // Validate cloned nested value
     updatedFormEl.valid = this.checkValidity(
       updatedFormEl.value,
@@ -127,27 +136,36 @@ class ContactData extends Component {
     );
     // Set value of cloned nested form
     updatedForm[inputId] = updatedFormEl;
-    console.log({ updatedForm });
+    let formIsValid = true;
+    for (let inputId in updatedForm) {
+      // Checks if individual inputs are valid and if overall form is valid.
+      formIsValid = updatedForm[inputId].valid && formIsValid;
+    }
     // Update form state with cloned form
-    this.setState({ orderForm: updatedForm });
+    this.setState({ formIsValid, orderForm: updatedForm });
   };
 
-  checkValidity(value, rules) {
+  checkValidity(value, validation) {
     let isValid = true;
-    if (rules.required) {
+    // Check if input has configured validation
+    if (!validation) {
+      // Returns truish since no validation
+      return true;
+    }
+    if (validation.required) {
       isValid = value.trim() !== "" && isValid;
     }
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
+    if (validation.minLength) {
+      isValid = value.length >= validation.minLength && isValid;
     }
-    if (rules.maxLength) {
-      isValid = value.length <= rules.minLength && isValid;
+    if (validation.maxLength) {
+      isValid = value.length <= validation.minLength && isValid;
     }
     return isValid;
   }
 
   render() {
-    const { loading, orderForm } = this.state;
+    const { formIsValid, loading, orderForm } = this.state;
     const formElementsArray = [];
     for (let key in orderForm) {
       formElementsArray.push({ id: key, config: orderForm[key] });
@@ -160,10 +178,17 @@ class ContactData extends Component {
             elementType={formEl.config.elementType}
             elementConfig={formEl.config.elementConfig}
             value={formEl.config.value}
+            invalid={!formEl.config.valid}
+            shouldValidate={formEl.config.validation !== null}
+            touched={formEl.config.touched}
             changed={event => this.inputChangedHandler(event, formEl.id)}
           />
         ))}
-        <Button btnType="Success" clicked={this.orderHandler}>
+        <Button
+          btnType="Success"
+          clicked={this.orderHandler}
+          disabled={!formIsValid}
+        >
           ORDER
         </Button>
       </form>
