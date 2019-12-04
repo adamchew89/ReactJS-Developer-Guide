@@ -1,7 +1,7 @@
 // Libraries
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 // Components
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
@@ -9,6 +9,7 @@ import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from "./ContactData/ContactData";
 
 class Checkout extends Component {
+
   checkoutCancelledHandler = () => {
     const { history } = this.props;
     history.goBack();
@@ -20,17 +21,23 @@ class Checkout extends Component {
   };
 
   render() {
-    const { match, ingredients } = this.props;
-    return (
-      <div>
-        <CheckoutSummary
-          ingredients={ingredients}
-          checkoutCancelled={this.checkoutCancelledHandler}
-          checkoutContinued={this.checkoutContinuedHandler}
-        />
-        <Route path={`${match.path}/contact-data`} component={ContactData} />
-      </div>
-    );
+    const { match, ingredients, purchased } = this.props;
+    let summary = <Redirect to="/" />;
+    if (ingredients) {
+      summary = purchased ? (
+        <Redirect to="/" />
+      ) : (
+        <>
+          <CheckoutSummary
+            ingredients={ingredients}
+            checkoutCancelled={this.checkoutCancelledHandler}
+            checkoutContinued={this.checkoutContinuedHandler}
+          />
+          <Route path={`${match.path}/contact-data`} component={ContactData} />
+        </>
+      );
+    }
+    return <div>{summary}</div>;
   }
 }
 
@@ -44,7 +51,8 @@ Checkout.defaultProps = {};
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients
+    ingredients: state.burger.ingredients,
+    purchased: state.order.purchased
   };
 };
 
