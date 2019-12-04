@@ -1,5 +1,6 @@
 // Libraries
 import React, { Component } from "react";
+import { connect } from "react-redux";
 // CSS
 import classes from "./ContactData.module.css";
 // Actions
@@ -205,4 +206,11 @@ class ContactData extends Component {
   }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice
+  };
+};
+
+export default connect(mapStateToProps)(ContactData);
