@@ -3,6 +3,9 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 // Actions
 import axios from "../../actions/axios-orders";
+// Stores
+import * as BurgerBuilderActionCreator from "../../stores/actions/burger-builder-action";
+import * as OrderActionCreator from "../../stores/actions/order-actions";
 // HOCs
 import withErrorHandler from "../../hocs/withErrorHandler/withErrorHandler";
 // Components
@@ -11,15 +14,18 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
-// Actions
-import * as ActionsType from "../../stores/actions";
 
 class BurgerBuilder extends Component {
   state = {
     purchasing: false,
-    loading: false,
-    error: false
+    loading: false
   };
+
+  componentDidMount() {
+    const { initIngredients, purchaseBurgerInit } = this.props;
+    initIngredients();
+    purchaseBurgerInit();
+  }
 
   updatePurchaseState(ingredients) {
     // Get sum total of all ingredients and cost
@@ -42,12 +48,13 @@ class BurgerBuilder extends Component {
   };
 
   render() {
-    const { loading, error } = this.state;
+    const { loading } = this.state;
     const {
       onIngredientAdded,
       onIngredientRemoved,
       ingredients,
-      totalPrice
+      totalPrice,
+      error
     } = this.props;
     const disabledInfo = { ...ingredients };
     for (let key in disabledInfo) {
@@ -101,17 +108,21 @@ BurgerBuilder.defaultProps = {};
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    ingredients: state.burger.ingredients,
+    totalPrice: state.burger.totalPrice,
+    error: state.burger.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: ingredientName =>
-      dispatch({ type: ActionsType.ADD_INGREDIENT, ingredientName }),
+      dispatch(BurgerBuilderActionCreator.addIngredient(ingredientName)),
     onIngredientRemoved: ingredientName =>
-      dispatch({ type: ActionsType.REMOVE_INGREDIENT, ingredientName })
+      dispatch(BurgerBuilderActionCreator.removeIngredient(ingredientName)),
+    initIngredients: () =>
+      dispatch(BurgerBuilderActionCreator.initIngredients()),
+      purchaseBurgerInit: () => dispatch(OrderActionCreator.purchaseBurgerInit())
   };
 };
 
