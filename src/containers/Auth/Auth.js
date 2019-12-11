@@ -2,10 +2,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 // CSS
 import classes from "./Auth.module.css";
 // Actions
-import * as AuthActions from "../../stores/actions/auth-action";
+import * as AuthActionCreator from "../../stores/actions/auth-action";
 // Containers
 // Components
 import Spinner from "../../components/UI/Spinner/Spinner";
@@ -47,6 +48,17 @@ class Auth extends Component {
     },
     isSignUp: true
   };
+
+  componentDidMount() {
+    const {
+      isBuildingBurger,
+      authRedirectPath,
+      onSetAuthRedirectPath
+    } = this.props;
+    if (!isBuildingBurger && authRedirectPath) {
+      onSetAuthRedirectPath("/");
+    }
+  }
 
   inputChangedHandler = (event, inputId) => {
     const { authForm } = this.state;
@@ -105,7 +117,7 @@ class Auth extends Component {
 
   render() {
     const { authForm, isSignUp } = this.state;
-    const { loading, error } = this.props;
+    const { loading, error, isAuthenticated, authRedirectPath } = this.props;
     const formElementsArray = [];
     for (let key in authForm) {
       formElementsArray.push({ id: key, config: authForm[key] });
@@ -129,8 +141,13 @@ class Auth extends Component {
     if (loading) {
       form = <Spinner />;
     }
+    let authRedirect = null;
+    if (isAuthenticated) {
+      authRedirect = <Redirect to={authRedirectPath} />;
+    }
     return (
       <div className={classes.Auth}>
+        {authRedirect}
         {errorMessage}
         <form onSubmit={this.submitHandler}>
           {form}
@@ -145,19 +162,39 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
-  onAuth: PropTypes.func
+  onAuth: PropTypes.func,
+  loading: PropTypes.bool,
+  error: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
+  isBuildingBurger: PropTypes.bool,
+  authRedirect: PropTypes.func
 };
 
-Auth.defaultProps = { onAuth: () => {} };
+Auth.defaultProps = {
+  onAuth: () => {},
+  loading: false,
+  error: null,
+  isAuthenticated: false,
+  isBuildingBurger: false,
+  authRedirect: () => {}
+};
 
 const mapStateToProps = state => {
-  return { loading: state.auth.loading, error: state.auth.error };
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    isAuthenticated: state.auth.idToken !== null,
+    isBuildingBurger: state.burger.building,
+    authRedirectPath: state.auth.authRedirectPath
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (email, password, isSignUp) =>
-      dispatch(AuthActions.auth(email, password, isSignUp))
+      dispatch(AuthActionCreator.auth(email, password, isSignUp)),
+    onSetAuthRedirectPath: path =>
+      dispatch(AuthActionCreator.setAuthRedirectPath(path))
   };
 };
 

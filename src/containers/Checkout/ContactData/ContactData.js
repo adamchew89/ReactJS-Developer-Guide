@@ -1,5 +1,6 @@
 // Libraries
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // CSS
 import classes from "./ContactData.module.css";
@@ -201,6 +202,18 @@ class ContactData extends Component {
     );
   }
 }
+
+ContactData.propTypes = {
+  ingredients: PropTypes.shape().isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  loading: PropTypes.bool,
+  idToken: PropTypes.string
+};
+
+ContactData.defaultProps = {
+  loading: false,
+  idToken: null
+};
 
 const mapStateToProps = state => {
   return {

@@ -1,5 +1,6 @@
 // Libraries
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // Actions
 import axios from "../../actions/axios-orders";
@@ -32,6 +33,14 @@ class Orders extends Component {
     return <div>{content}</div>;
   }
 }
+
+Orders.propTypes = {
+  orders: PropTypes.array.isRequired,
+  loading: PropTypes.bool,
+  idToken: PropTypes.string
+};
+
+Orders.defaultProps = { loading: false, idToken: null };
 
 const mapStateToProps = state => {
   return {
