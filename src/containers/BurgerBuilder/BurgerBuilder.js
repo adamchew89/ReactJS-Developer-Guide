@@ -116,11 +116,11 @@ class BurgerBuilder extends Component {
 BurgerBuilder.propTypes = {
   ingredients: PropTypes.shape().isRequired,
   totalPrice: PropTypes.number.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.bool,
   isAuthenticated: PropTypes.bool
 };
 
-BurgerBuilder.defaultProps = { error: null, isAuthenticated: false };
+BurgerBuilder.defaultProps = { error: false, isAuthenticated: false };
 
 const mapStateToProps = state => {
   return {
