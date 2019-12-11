@@ -13,8 +13,8 @@ import * as OrderActionCreator from "../../stores/actions/order-actions";
 
 class Orders extends Component {
   componentDidMount() {
-    const { fetchOrders } = this.props;
-    fetchOrders();
+    const { fetchOrders, idToken } = this.props;
+    fetchOrders(idToken);
   }
 
   render() {
@@ -36,13 +36,14 @@ class Orders extends Component {
 const mapStateToProps = state => {
   return {
     orders: state.order.orders,
-    loading: state.order.loading
+    loading: state.order.loading,
+    idToken: state.auth.idToken
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchOrders: () => dispatch(OrderActionCreator.fetchOrders())
+    fetchOrders: idToken => dispatch(OrderActionCreator.fetchOrders(idToken))
   };
 };
 
