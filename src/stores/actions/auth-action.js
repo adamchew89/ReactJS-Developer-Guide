@@ -54,6 +54,7 @@ export const auth = (email, password, isSignUp) => {
       .post(apiUrl, authData)
       .then(response => {
         const { expiresIn, idToken, localId } = response.data;
+        console.log({ expiresIn, idToken, localId });
         const expirationDate = new Date(
           new Date().getTime() + expiresIn * 1000
         );
@@ -80,7 +81,7 @@ export const authCheckState = () => {
     if (!idToken) {
       dispatch(authLogout());
     } else {
-      const userId = new Date(localStorage.getItem("userId"));
+      const userId = localStorage.getItem("userId");
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
       if (expirationDate > new Date()) {
         const expiresIn = expirationDate.getTime() - new Date().getTime();
