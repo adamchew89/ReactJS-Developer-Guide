@@ -10,7 +10,7 @@ import NavigationItems from "../NavigationItems/NavigationItems";
 import Backdrop from "../../UI/Backdrop/Backdrop";
 
 const SideDrawer = props => {
-  const { open, closed } = props;
+  const { open, closed, isAuthenticated } = props;
   let attachedClasses = [classes.SideDrawer, classes.Close];
   if (open) {
     attachedClasses = [classes.SideDrawer, classes.Open];
@@ -18,12 +18,12 @@ const SideDrawer = props => {
   return (
     <Fragment>
       <Backdrop show={open} clicked={closed} />
-      <div className={attachedClasses.join(" ")}>
+      <div className={attachedClasses.join(" ")} onClick={closed}>
         <div className={classes.Logo}>
           <Logo />
         </div>
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={isAuthenticated} />
         </nav>
       </div>
     </Fragment>
@@ -32,9 +32,14 @@ const SideDrawer = props => {
 
 SideDrawer.propTypes = {
   open: PropTypes.bool,
-  closed: PropTypes.func
+  closed: PropTypes.func,
+  isAuthenticated: PropTypes.bool
 };
 
-SideDrawer.defaultProps = { open: true, closed: () => {} };
+SideDrawer.defaultProps = {
+  open: true,
+  closed: () => {},
+  isAuthenticated: false
+};
 
 export default SideDrawer;
