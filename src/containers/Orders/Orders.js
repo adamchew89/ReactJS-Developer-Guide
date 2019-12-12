@@ -43,21 +43,17 @@ Orders.propTypes = {
 
 Orders.defaultProps = { loading: false, idToken: null, userId: null };
 
-const mapStateToProps = state => {
-  return {
-    orders: state.order.orders,
-    loading: state.order.loading,
-    idToken: state.auth.idToken,
-    userId: state.auth.userId
-  };
-};
+const mapStateToProps = state => ({
+  orders: state.order.orders,
+  loading: state.order.loading,
+  idToken: state.auth.idToken,
+  userId: state.auth.userId
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchOrders: (idToken, userId) =>
-      dispatch(OrderActionCreator.fetchOrders(idToken, userId))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  fetchOrders: (idToken, userId) =>
+    dispatch(OrderActionCreator.fetchOrders(idToken, userId))
+});
 
 export default connect(
   mapStateToProps,

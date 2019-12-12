@@ -204,22 +204,18 @@ ContactData.defaultProps = {
   userId: null
 };
 
-const mapStateToProps = state => {
-  return {
-    ingredients: state.burger.ingredients,
-    totalPrice: state.burger.totalPrice,
-    loading: state.order.loading,
-    idToken: state.auth.idToken,
-    userId: state.auth.userId
-  };
-};
+const mapStateToProps = state => ({
+  ingredients: state.burger.ingredients,
+  totalPrice: state.burger.totalPrice,
+  loading: state.order.loading,
+  idToken: state.auth.idToken,
+  userId: state.auth.userId
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onOrderBurger: (orderData, idToken) =>
-      dispatch(OrderActionCreator.purchaseBurger(orderData, idToken))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  onOrderBurger: (orderData, idToken) =>
+    dispatch(OrderActionCreator.purchaseBurger(orderData, idToken))
+});
 
 export default connect(
   mapStateToProps,

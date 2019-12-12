@@ -22,7 +22,6 @@ class Checkout extends Component {
   render() {
     const { match, ingredients, purchased } = this.props;
     let summary = <Redirect to="/" />;
-    console.log({ purchased });
     if (ingredients) {
       summary = purchased ? (
         <Redirect to="/" />
@@ -51,11 +50,9 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = { purchased: false };
 
-const mapStateToProps = state => {
-  return {
-    ingredients: state.burger.ingredients,
-    purchased: state.order.purchased
-  };
-};
+const mapStateToProps = state => ({
+  ingredients: state.burger.ingredients,
+  purchased: state.order.purchased
+});
 
 export default connect(mapStateToProps)(Checkout);

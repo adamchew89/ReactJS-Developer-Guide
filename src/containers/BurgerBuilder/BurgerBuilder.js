@@ -122,28 +122,23 @@ BurgerBuilder.propTypes = {
 
 BurgerBuilder.defaultProps = { error: false, isAuthenticated: false };
 
-const mapStateToProps = state => {
-  return {
-    ingredients: state.burger.ingredients,
-    totalPrice: state.burger.totalPrice,
-    error: state.burger.error,
-    isAuthenticated: state.auth.idToken !== null
-  };
-};
+const mapStateToProps = state => ({
+  ingredients: state.burger.ingredients,
+  totalPrice: state.burger.totalPrice,
+  error: state.burger.error,
+  isAuthenticated: state.auth.idToken !== null
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onIngredientAdded: ingredientName =>
-      dispatch(BurgerBuilderActionCreator.addIngredient(ingredientName)),
-    onIngredientRemoved: ingredientName =>
-      dispatch(BurgerBuilderActionCreator.removeIngredient(ingredientName)),
-    initIngredients: () =>
-      dispatch(BurgerBuilderActionCreator.initIngredients()),
-    purchaseBurgerInit: () => dispatch(OrderActionCreator.purchaseBurgerInit()),
-    onSetAuthRedirectPath: path =>
-      dispatch(AuthActionCreator.setAuthRedirectPath(path))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  onIngredientAdded: ingredientName =>
+    dispatch(BurgerBuilderActionCreator.addIngredient(ingredientName)),
+  onIngredientRemoved: ingredientName =>
+    dispatch(BurgerBuilderActionCreator.removeIngredient(ingredientName)),
+  initIngredients: () => dispatch(BurgerBuilderActionCreator.initIngredients()),
+  purchaseBurgerInit: () => dispatch(OrderActionCreator.purchaseBurgerInit()),
+  onSetAuthRedirectPath: path =>
+    dispatch(AuthActionCreator.setAuthRedirectPath(path))
+});
 
 export default connect(
   mapStateToProps,

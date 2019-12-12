@@ -161,23 +161,19 @@ Auth.defaultProps = {
   authRedirectPath: null
 };
 
-const mapStateToProps = state => {
-  return {
-    loading: state.auth.loading,
-    error: state.auth.error,
-    isAuthenticated: state.auth.idToken !== null,
-    isBuildingBurger: state.burger.building,
-    authRedirectPath: state.auth.authRedirectPath
-  };
-};
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  error: state.auth.error,
+  isAuthenticated: state.auth.idToken !== null,
+  isBuildingBurger: state.burger.building,
+  authRedirectPath: state.auth.authRedirectPath
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onAuth: (email, password, isSignUp) =>
-      dispatch(AuthActionCreator.auth(email, password, isSignUp)),
-    onSetAuthRedirectPath: path =>
-      dispatch(AuthActionCreator.setAuthRedirectPath(path))
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  onAuth: (email, password, isSignUp) =>
+    dispatch(AuthActionCreator.auth(email, password, isSignUp)),
+  onSetAuthRedirectPath: path =>
+    dispatch(AuthActionCreator.setAuthRedirectPath(path))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);
