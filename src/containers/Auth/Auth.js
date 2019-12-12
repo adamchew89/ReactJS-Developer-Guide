@@ -7,6 +7,8 @@ import { Redirect } from "react-router-dom";
 import classes from "./Auth.module.css";
 // Actions
 import * as AuthActionCreator from "../../stores/actions/auth-action";
+// Utils
+import { updateObject, checkValidity } from "../../shared/utils/utils";
 // Containers
 // Components
 import Spinner from "../../components/UI/Spinner/Spinner";
@@ -62,19 +64,16 @@ class Auth extends Component {
 
   inputChangedHandler = (event, inputId) => {
     const { authForm } = this.state;
-    // Deep cloning for additional layers to remove direct refernce to original nested values
-    const updatedForm = { ...authForm };
-    const updatedFormEl = { ...updatedForm[inputId] };
     // Updating the cloned nested structure
-    updatedFormEl.value = event.target.value;
-    updatedFormEl.touched = true;
-    // Validate cloned nested value
-    updatedFormEl.valid = this.checkValidity(
-      updatedFormEl.value,
-      updatedFormEl.validation
-    );
+    const { value } = event.target;
     // Set value of cloned nested form
-    updatedForm[inputId] = updatedFormEl;
+    const updatedForm = updateObject(authForm, {
+      [inputId]: updateObject(authForm[inputId], {
+        value: value,
+        touched: true,
+        valid: checkValidity(value, authForm[inputId].validation)
+      })
+    });
     let formIsValid = true;
     for (let inputId in updatedForm) {
       // Checks if individual inputs are valid and if overall form is valid.
@@ -83,25 +82,6 @@ class Auth extends Component {
     // Update form state with cloned form
     this.setState({ formIsValid, authForm: updatedForm });
   };
-
-  checkValidity(value, validation) {
-    let isValid = true;
-    // Check if input has configured validation
-    if (!validation) {
-      // Returns truish since no validation
-      return true;
-    }
-    if (validation.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (validation.minLength) {
-      isValid = value.length >= validation.minLength && isValid;
-    }
-    if (validation.maxLength) {
-      isValid = value.length <= validation.minLength && isValid;
-    }
-    return isValid;
-  }
 
   submitHandler = event => {
     event.preventDefault();
@@ -116,7 +96,7 @@ class Auth extends Component {
   };
 
   render() {
-    const { authForm, isSignUp } = this.state;
+    const { authForm, isSignUp, formIsValid } = this.state;
     const { loading, error, isAuthenticated, authRedirectPath } = this.props;
     const formElementsArray = [];
     for (let key in authForm) {
@@ -142,7 +122,6 @@ class Auth extends Component {
       form = <Spinner />;
     }
     let authRedirect = null;
-    console.log(this.props);
     if (isAuthenticated) {
       authRedirect = <Redirect to={authRedirectPath} />;
     }
@@ -152,7 +131,9 @@ class Auth extends Component {
         {errorMessage}
         <form onSubmit={this.submitHandler}>
           {form}
-          <Button btnType="Success">SUBMIT</Button>
+          <Button btnType="Success" disabled={!formIsValid}>
+            SUBMIT
+          </Button>
         </form>
         <Button btnType="Danger" clicked={this.switchAuthModeHandler}>
           {`SWITCH TO ${isSignUp ? "SIGN IN" : "SIGN UP"}`}

@@ -6,6 +6,8 @@ import { connect } from "react-redux";
 import classes from "./ContactData.module.css";
 // Actions
 import axios from "../../../actions/axios-orders";
+// Utils
+import { updateObject, checkValidity } from "../../../shared/utils/utils";
 // Components
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -111,7 +113,6 @@ class ContactData extends Component {
       idToken,
       userId
     } = this.props;
-    console.log({ userId });
     // Create a new object of only form data
     const formData = {};
     for (let formElId in orderForm) {
@@ -128,19 +129,16 @@ class ContactData extends Component {
 
   inputChangedHandler = (event, inputId) => {
     const { orderForm } = this.state;
-    // Deep cloning for additional layers to remove direct refernce to original nested values
-    const updatedForm = { ...orderForm };
-    const updatedFormEl = { ...updatedForm[inputId] };
     // Updating the cloned nested structure
-    updatedFormEl.value = event.target.value;
-    updatedFormEl.touched = true;
-    // Validate cloned nested value
-    updatedFormEl.valid = this.checkValidity(
-      updatedFormEl.value,
-      updatedFormEl.validation
-    );
+    const { value } = event.target;
     // Set value of cloned nested form
-    updatedForm[inputId] = updatedFormEl;
+    const updatedForm = updateObject(orderForm, {
+      [inputId]: updateObject(orderForm[inputId], {
+        value: value,
+        touched: true,
+        valid: checkValidity(value, orderForm[inputId].validation)
+      })
+    });
     let formIsValid = true;
     for (let inputId in updatedForm) {
       // Checks if individual inputs are valid and if overall form is valid.
@@ -149,25 +147,6 @@ class ContactData extends Component {
     // Update form state with cloned form
     this.setState({ formIsValid, orderForm: updatedForm });
   };
-
-  checkValidity(value, validation) {
-    let isValid = true;
-    // Check if input has configured validation
-    if (!validation) {
-      // Returns truish since no validation
-      return true;
-    }
-    if (validation.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (validation.minLength) {
-      isValid = value.length >= validation.minLength && isValid;
-    }
-    if (validation.maxLength) {
-      isValid = value.length <= validation.minLength && isValid;
-    }
-    return isValid;
-  }
 
   render() {
     const { formIsValid, orderForm } = this.state;
