@@ -22,6 +22,7 @@ class Checkout extends Component {
   render() {
     const { match, ingredients, purchased } = this.props;
     let summary = <Redirect to="/" />;
+    console.log({ purchased });
     if (ingredients) {
       summary = purchased ? (
         <Redirect to="/" />

@@ -8,19 +8,21 @@ import NavigationItem from "./NavigationItem/NavgationItem";
 
 const NavigationItems = props => {
   const { isAuthenticated } = props;
+  let content = <NavigationItem link="/auth">Authenticate</NavigationItem>;
+  if (isAuthenticated) {
+    content = (
+      <>
+        <NavigationItem link="/orders">Orders</NavigationItem>
+        <NavigationItem link="/logout">Logout</NavigationItem>
+      </>
+    );
+  }
   return (
     <ul className={classes.NavigationItems}>
       <NavigationItem link="/" exact>
         Burger Builder
       </NavigationItem>
-      {isAuthenticated ? (
-        <NavigationItem link="/orders">Orders</NavigationItem>
-      ) : null}
-      {isAuthenticated ? (
-        <NavigationItem link="/logout">Logout</NavigationItem>
-      ) : (
-        <NavigationItem link="/auth">Authenticate</NavigationItem>
-      )}
+      {content}
     </ul>
   );
 };

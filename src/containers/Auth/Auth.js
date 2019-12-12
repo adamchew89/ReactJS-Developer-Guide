@@ -186,8 +186,7 @@ const mapStateToProps = state => {
     error: state.auth.error,
     isAuthenticated: state.auth.idToken !== null,
     isBuildingBurger: state.burger.building,
-    authRedirectPath: state.auth.authRedirectPath,
-    idToken: state.auth.idToken
+    authRedirectPath: state.auth.authRedirectPath
   };
 };
 
