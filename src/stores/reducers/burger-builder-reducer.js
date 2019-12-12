@@ -19,8 +19,8 @@ export const INGREDIENT_PRICES = {
 };
 
 // Initial state
-const initialState = {
-  ingredients: {},
+export const initialState = {
+  ingredients: { [SALAD]: 0, [BACON]: 0, [CHEESE]: 0, [MEAT]: 0 },
   totalPrice: 4,
   error: false,
   building: false

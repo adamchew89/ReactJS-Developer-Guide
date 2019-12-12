@@ -15,6 +15,7 @@ describe("<NavigationItems />", () => {
   let wrapper;
   // Executed set-up method before each individual test case.
   beforeEach(() => {
+    // shallow rendering replaces child components with identified placeholders
     wrapper = shallow(<NavigationItems />);
   });
   // Executed post-call method after each individual test case.
@@ -28,25 +29,9 @@ describe("<NavigationItems />", () => {
     expect(wrapper.find(NavigationItem)).toHaveLength(2);
   });
 
-  // TODO: Test case is a placeholder for future version of project
   it("should render three <NavigationItem /> elements if authenticated.", () => {
     wrapper.setProps({ isAuthenticated: true });
-    expect(wrapper.find(NavigationItem)).toHaveLength(2);
+    expect(wrapper.find(NavigationItem)).toHaveLength(3);
   });
-
-  it("should render 'Burger Builder' link as an active elements.", () => {
-    expect(
-      wrapper.contains(
-        <NavigationItem link="/" active>
-          Burger Builder
-        </NavigationItem>
-      )
-    ).toBeTruthy();
-  });
-
-  it("should render 'Checkout' link as a non-active elements.", () => {
-    expect(
-      wrapper.contains(<NavigationItem link="/">Checkout</NavigationItem>)
-    ).toBeTruthy();
-  });
+  
 });

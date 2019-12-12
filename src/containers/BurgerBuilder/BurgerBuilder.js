@@ -114,6 +114,8 @@ export class BurgerBuilder extends Component {
 }
 
 BurgerBuilder.propTypes = {
+  initIngredients: PropTypes.func.isRequired,
+  purchaseBurgerInit: PropTypes.func.isRequired,
   ingredients: PropTypes.shape().isRequired,
   totalPrice: PropTypes.number.isRequired,
   error: PropTypes.bool,
