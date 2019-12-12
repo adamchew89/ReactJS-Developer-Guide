@@ -21,7 +21,8 @@ const BuildControls = props => {
     addIngredient,
     removeIngredient,
     currentPrice,
-    ordered
+    ordered,
+    isAuth
   } = props;
   return (
     <div className={classes.BuildControls}>
@@ -31,7 +32,9 @@ const BuildControls = props => {
       {controls.map(control => (
         <BuildControl
           key={control}
-          label={`${control.charAt(0).toUpperCase()}${control.slice(1).toLowerCase()}`}
+          label={`${control.charAt(0).toUpperCase()}${control
+            .slice(1)
+            .toLowerCase()}`}
           disabled={disabled[control]}
           added={() => addIngredient(control)}
           removed={() => removeIngredient(control)}
@@ -42,7 +45,7 @@ const BuildControls = props => {
         disabled={!purchaseable}
         onClick={ordered}
       >
-        ORDER NOW!
+        {isAuth ? "ORDER NOW!" : "SIGN IN!"}
       </button>
     </div>
   );
@@ -54,13 +57,15 @@ BuildControls.propTypes = {
   ordered: PropTypes.func.isRequired,
   purchaseable: PropTypes.bool,
   disabled: PropTypes.object,
-  currentPrice: PropTypes.number
+  currentPrice: PropTypes.number,
+  isAuth: PropTypes.bool
 };
 
 BuildControls.defaultProps = {
   purchaseable: false,
   disabled: {},
-  currentPrice: 0.0
+  currentPrice: 0.0,
+  isAuth: false
 };
 
 export default BuildControls;

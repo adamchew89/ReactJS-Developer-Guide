@@ -9,7 +9,6 @@ import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from "./ContactData/ContactData";
 
 class Checkout extends Component {
-
   checkoutCancelledHandler = () => {
     const { history } = this.props;
     history.goBack();
@@ -44,16 +43,16 @@ class Checkout extends Component {
 Checkout.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  ingredients: PropTypes.shape().isRequired,
+  purchased: PropTypes.bool
 };
 
-Checkout.defaultProps = {};
+Checkout.defaultProps = { purchased: false };
 
-const mapStateToProps = state => {
-  return {
-    ingredients: state.burger.ingredients,
-    purchased: state.order.purchased
-  };
-};
+const mapStateToProps = state => ({
+  ingredients: state.burger.ingredients,
+  purchased: state.order.purchased
+});
 
 export default connect(mapStateToProps)(Checkout);

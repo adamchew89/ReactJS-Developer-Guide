@@ -1,5 +1,6 @@
 // Libraries
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // Actions
 import axios from "../../actions/axios-orders";
@@ -13,8 +14,8 @@ import * as OrderActionCreator from "../../stores/actions/order-actions";
 
 class Orders extends Component {
   componentDidMount() {
-    const { fetchOrders } = this.props;
-    fetchOrders();
+    const { fetchOrders, idToken, userId } = this.props;
+    fetchOrders(idToken, userId);
   }
 
   render() {
@@ -33,18 +34,26 @@ class Orders extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    orders: state.order.orders,
-    loading: state.order.loading
-  };
+Orders.propTypes = {
+  orders: PropTypes.array.isRequired,
+  loading: PropTypes.bool,
+  idToken: PropTypes.string,
+  userId: PropTypes.string
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    fetchOrders: () => dispatch(OrderActionCreator.fetchOrders())
-  };
-};
+Orders.defaultProps = { loading: false, idToken: null, userId: null };
+
+const mapStateToProps = state => ({
+  orders: state.order.orders,
+  loading: state.order.loading,
+  idToken: state.auth.idToken,
+  userId: state.auth.userId
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchOrders: (idToken, userId) =>
+    dispatch(OrderActionCreator.fetchOrders(idToken, userId))
+});
 
 export default connect(
   mapStateToProps,

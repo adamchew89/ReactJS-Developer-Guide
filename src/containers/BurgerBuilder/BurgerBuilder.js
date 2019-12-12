@@ -1,11 +1,13 @@
 // Libraries
 import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // Actions
 import axios from "../../actions/axios-orders";
 // Stores
 import * as BurgerBuilderActionCreator from "../../stores/actions/burger-builder-action";
 import * as OrderActionCreator from "../../stores/actions/order-actions";
+import * as AuthActionCreator from "../../stores/actions/auth-action";
 // HOCs
 import withErrorHandler from "../../hocs/withErrorHandler/withErrorHandler";
 // Components
@@ -36,7 +38,13 @@ class BurgerBuilder extends Component {
   }
 
   purchaseHandler = () => {
-    this.setState({ purchasing: true });
+    const { isAuthenticated, history, onSetAuthRedirectPath } = this.props;
+    if (isAuthenticated) {
+      this.setState({ purchasing: true });
+    } else {
+      onSetAuthRedirectPath("/checkout");
+      history.push("/auth");
+    }
   };
 
   purchaseCancelHandler = () => {
@@ -44,7 +52,8 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    this.props.history.push("/checkout");
+    const { history } = this.props;
+    history.push("/checkout");
   };
 
   render() {
@@ -54,7 +63,8 @@ class BurgerBuilder extends Component {
       onIngredientRemoved,
       ingredients,
       totalPrice,
-      error
+      error,
+      isAuthenticated
     } = this.props;
     const disabledInfo = { ...ingredients };
     for (let key in disabledInfo) {
@@ -73,6 +83,7 @@ class BurgerBuilder extends Component {
             addIngredient={onIngredientAdded}
             removeIngredient={onIngredientRemoved}
             ordered={this.purchaseHandler}
+            isAuth={isAuthenticated}
           />
         </Fragment>
       );
@@ -102,29 +113,32 @@ class BurgerBuilder extends Component {
   }
 }
 
-BurgerBuilder.propTypes = {};
-
-BurgerBuilder.defaultProps = {};
-
-const mapStateToProps = state => {
-  return {
-    ingredients: state.burger.ingredients,
-    totalPrice: state.burger.totalPrice,
-    error: state.burger.error
-  };
+BurgerBuilder.propTypes = {
+  ingredients: PropTypes.shape().isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  error: PropTypes.bool,
+  isAuthenticated: PropTypes.bool
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onIngredientAdded: ingredientName =>
-      dispatch(BurgerBuilderActionCreator.addIngredient(ingredientName)),
-    onIngredientRemoved: ingredientName =>
-      dispatch(BurgerBuilderActionCreator.removeIngredient(ingredientName)),
-    initIngredients: () =>
-      dispatch(BurgerBuilderActionCreator.initIngredients()),
-      purchaseBurgerInit: () => dispatch(OrderActionCreator.purchaseBurgerInit())
-  };
-};
+BurgerBuilder.defaultProps = { error: false, isAuthenticated: false };
+
+const mapStateToProps = state => ({
+  ingredients: state.burger.ingredients,
+  totalPrice: state.burger.totalPrice,
+  error: state.burger.error,
+  isAuthenticated: state.auth.idToken !== null
+});
+
+const mapDispatchToProps = dispatch => ({
+  onIngredientAdded: ingredientName =>
+    dispatch(BurgerBuilderActionCreator.addIngredient(ingredientName)),
+  onIngredientRemoved: ingredientName =>
+    dispatch(BurgerBuilderActionCreator.removeIngredient(ingredientName)),
+  initIngredients: () => dispatch(BurgerBuilderActionCreator.initIngredients()),
+  purchaseBurgerInit: () => dispatch(OrderActionCreator.purchaseBurgerInit()),
+  onSetAuthRedirectPath: path =>
+    dispatch(AuthActionCreator.setAuthRedirectPath(path))
+});
 
 export default connect(
   mapStateToProps,

@@ -15,7 +15,10 @@ import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./stores/reducers/reducer";
 
 // Middleware: Chrome Redux Dev Tool Extension
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers =
+  process.env.NODE_ENV === "development"
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : null || compose;
 
 // Initialise a Redux store
 const configuredStore = createStore(

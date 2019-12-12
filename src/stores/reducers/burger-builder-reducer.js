@@ -1,7 +1,7 @@
 // Actions
 import * as ActionTypes from "../actions/action-types";
 // Utils
-import { updateObject } from "../utils/utils";
+import { updateObject } from "../../shared/utils/utils";
 // Components
 import {
   SALAD,
@@ -20,9 +20,10 @@ export const INGREDIENT_PRICES = {
 
 // Initial state
 const initialState = {
-  ingredients: null,
+  ingredients: {},
   totalPrice: 4,
-  error: false
+  error: false,
+  building: false
 };
 
 const ingredientsReducer = (state = initialState, action) => {
@@ -35,7 +36,8 @@ const ingredientsReducer = (state = initialState, action) => {
       updatedIngredients = updateObject(state.ingredients, updatedIngredient);
       updatedState = {
         ingredients: updatedIngredients,
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        building: true
       };
       return updateObject(state, updatedState);
     case ActionTypes.REMOVE_INGREDIENT:
@@ -45,14 +47,16 @@ const ingredientsReducer = (state = initialState, action) => {
       updatedIngredients = updateObject(state.ingredients, updatedIngredient);
       updatedState = {
         ingredients: updatedIngredients,
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        building: true
       };
       return updateObject(state, updatedState);
     case ActionTypes.SET_INGREDIENT:
       return updateObject(state, {
         ingredients: action.ingredients,
         error: false,
-        totalPrice: 4
+        totalPrice: 4,
+        building: false
       });
     case ActionTypes.FETCH_INGREDIENTS_FAIL:
       return updateObject(state, { error: true });
