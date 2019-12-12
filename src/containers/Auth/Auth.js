@@ -55,7 +55,7 @@ class Auth extends Component {
       authRedirectPath,
       onSetAuthRedirectPath
     } = this.props;
-    if (!isBuildingBurger && authRedirectPath) {
+    if (!isBuildingBurger && authRedirectPath !== "/") {
       onSetAuthRedirectPath("/");
     }
   }
@@ -142,6 +142,7 @@ class Auth extends Component {
       form = <Spinner />;
     }
     let authRedirect = null;
+    console.log(this.props);
     if (isAuthenticated) {
       authRedirect = <Redirect to={authRedirectPath} />;
     }
@@ -167,7 +168,7 @@ Auth.propTypes = {
   error: PropTypes.string,
   isAuthenticated: PropTypes.bool,
   isBuildingBurger: PropTypes.bool,
-  authRedirect: PropTypes.func
+  authRedirectPath: PropTypes.string
 };
 
 Auth.defaultProps = {
@@ -176,7 +177,7 @@ Auth.defaultProps = {
   error: null,
   isAuthenticated: false,
   isBuildingBurger: false,
-  authRedirect: () => {}
+  authRedirectPath: null
 };
 
 const mapStateToProps = state => {
@@ -185,7 +186,8 @@ const mapStateToProps = state => {
     error: state.auth.error,
     isAuthenticated: state.auth.idToken !== null,
     isBuildingBurger: state.burger.building,
-    authRedirectPath: state.auth.authRedirectPath
+    authRedirectPath: state.auth.authRedirectPath,
+    idToken: state.auth.idToken
   };
 };
 

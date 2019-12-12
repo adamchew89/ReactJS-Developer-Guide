@@ -104,7 +104,14 @@ class ContactData extends Component {
   orderHandler = event => {
     event.preventDefault();
     const { orderForm } = this.state;
-    const { ingredients, totalPrice, onOrderBurger, idToken } = this.props;
+    const {
+      ingredients,
+      totalPrice,
+      onOrderBurger,
+      idToken,
+      userId
+    } = this.props;
+    console.log({ userId });
     // Create a new object of only form data
     const formData = {};
     for (let formElId in orderForm) {
@@ -113,7 +120,8 @@ class ContactData extends Component {
     const order = {
       ingredients,
       totalPrice,
-      orderData: formData
+      orderData: formData,
+      userId
     };
     onOrderBurger(order, idToken);
   };
@@ -207,12 +215,14 @@ ContactData.propTypes = {
   ingredients: PropTypes.shape().isRequired,
   totalPrice: PropTypes.number.isRequired,
   loading: PropTypes.bool,
-  idToken: PropTypes.string
+  idToken: PropTypes.string,
+  userId: PropTypes.string
 };
 
 ContactData.defaultProps = {
   loading: false,
-  idToken: null
+  idToken: null,
+  userId: null
 };
 
 const mapStateToProps = state => {
@@ -220,7 +230,8 @@ const mapStateToProps = state => {
     ingredients: state.burger.ingredients,
     totalPrice: state.burger.totalPrice,
     loading: state.order.loading,
-    idToken: state.auth.idToken
+    idToken: state.auth.idToken,
+    userId: state.auth.userId
   };
 };
 
