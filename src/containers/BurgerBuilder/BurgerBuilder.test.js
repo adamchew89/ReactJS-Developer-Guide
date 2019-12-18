@@ -10,6 +10,7 @@ import { BurgerBuilder } from "./BurgerBuilder";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import * as Ingredients from "../../components/Burger/BurgerIngredient/BurgerIngredient";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
+import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 
 // Configures enzyme to adapt to react16 via enzyme-adapter-react-16
 configure({ adapter: new Adapter() });
@@ -19,8 +20,8 @@ describe("<BurgerBuilder />", () => {
   const initialProps = {
     initIngredients: () => {},
     purchaseBurgerInit: () => {},
-    addIngredient: ingName => {},
-    removeIngredient: ingName => {},
+    onIngredientAdded: ingName => ingName,
+    onIngredientRemoved: ingName => ingName,
     ingredients: {},
     totalPrice: 0
   };
@@ -36,18 +37,19 @@ describe("<BurgerBuilder />", () => {
   });
 
   it("should not render <p>Ingredients cannot be loaded!</p> when error exists", () => {
-    wrapper.setProps({ error: true, ingredients: undefined });
+    wrapper.setProps({ error: true });
     expect(wrapper.find("p")).toHaveLength(1);
   });
 
   it("should render <BuildControls /> when receiving ingredients", () => {
     wrapper.setProps({ ingredients: { [Ingredients.SALAD]: 0 } });
+    wrapper.setState({ loading: false });
     expect(wrapper.find(BuildControls)).toHaveLength(1);
   });
 
-  it("should render <Spinner /> if loading is true", () => {
+  it("should render two <Spinner /> if loading is true", () => {
     wrapper.setState({ loading: true });
-    expect(wrapper.find(Spinner)).toHaveLength(1);
+    expect(wrapper.find(Spinner)).toHaveLength(2);
   });
 
   it("should set state purchasing to true if authenticated", () => {
@@ -65,4 +67,5 @@ describe("<BurgerBuilder />", () => {
     instance.purchaseCancelHandler();
     expect(instance.state.purchasing).toBeFalsy();
   });
+
 });

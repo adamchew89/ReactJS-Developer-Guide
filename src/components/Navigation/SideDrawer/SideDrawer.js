@@ -31,14 +31,13 @@ const SideDrawer = props => {
 };
 
 SideDrawer.propTypes = {
+  closed: PropTypes.func.isRequired,
   open: PropTypes.bool,
-  closed: PropTypes.func,
   isAuthenticated: PropTypes.bool
 };
 
 SideDrawer.defaultProps = {
   open: true,
-  closed: () => {},
   isAuthenticated: false
 };
 

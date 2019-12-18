@@ -18,14 +18,14 @@ const Button = props => {
 };
 
 Button.propTypes = {
-  children: PropTypes.string.isRequired,
-  clicked: PropTypes.func,
+  clicked: PropTypes.func.isRequired,
+  children: PropTypes.string,
   btnType: PropTypes.string,
   disabled: PropTypes.bool
 };
 
 Button.defaultProps = {
-  clicked: () => {},
+  children: "Submit",
   btnType: "Danger",
   disabled: false
 };

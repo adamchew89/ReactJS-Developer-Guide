@@ -24,12 +24,11 @@ const Toolbar = props => {
 };
 
 Toolbar.propTypes = {
-  drawerToggleClicked: PropTypes.func,
+  drawerToggleClicked: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 
 Toolbar.defaultProps = {
-  drawerToggleClicked: () => {},
   isAuthenticated: false
 };
 

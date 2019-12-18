@@ -42,4 +42,25 @@ describe("<BuildControls />", () => {
     expect(wrapper.find("button")).toHaveLength(1);
     expect(wrapper.find("button").text()).toEqual("ORDER NOW!");
   });
+
+  it("should trigger function", () => {
+    const mockFnAdded = jest.fn();
+    const mockFnRemoved = jest.fn();
+    wrapper.setProps({
+      addIngredient: mockFnAdded,
+      removeIngredient: mockFnRemoved
+    });
+    expect(mockFnAdded).not.toHaveBeenCalled();
+    expect(mockFnRemoved).not.toHaveBeenCalled();
+    wrapper
+      .find(BuildControl)
+      .get(0)
+      .props.added();
+    wrapper
+      .find(BuildControl)
+      .get(0)
+      .props.removed();
+    expect(mockFnAdded).toHaveBeenCalledTimes(1);
+    expect(mockFnRemoved).toHaveBeenCalledTimes(1);
+  });
 });

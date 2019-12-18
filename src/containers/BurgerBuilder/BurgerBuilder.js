@@ -72,7 +72,7 @@ export class BurgerBuilder extends Component {
     }
     let orderSummary = null;
     let burger = error ? <p>Ingredients cannot be loaded!</p> : <Spinner />;
-    if (ingredients) {
+    if (Object.keys(ingredients).length !== 0) {
       burger = (
         <Fragment>
           <Burger ingredients={ingredients} />
@@ -116,7 +116,9 @@ export class BurgerBuilder extends Component {
 BurgerBuilder.propTypes = {
   initIngredients: PropTypes.func.isRequired,
   purchaseBurgerInit: PropTypes.func.isRequired,
-  ingredients: PropTypes.shape().isRequired,
+  onIngredientAdded: PropTypes.func.isRequired,
+  onIngredientRemoved: PropTypes.func.isRequired,
+  ingredients: PropTypes.object.isRequired,
   totalPrice: PropTypes.number.isRequired,
   error: PropTypes.bool,
   isAuthenticated: PropTypes.bool
