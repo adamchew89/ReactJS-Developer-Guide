@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import axios from "../../actions/axios-orders";
 // Stores
 import * as BurgerBuilderActionCreator from "../../stores/actions/burger-builder-action";
-import * as OrderActionCreator from "../../stores/actions/order-actions";
+import * as OrderActionCreator from "../../stores/actions/order-action";
 import * as AuthActionCreator from "../../stores/actions/auth-action";
 // HOCs
 import withErrorHandler from "../../hocs/withErrorHandler/withErrorHandler";

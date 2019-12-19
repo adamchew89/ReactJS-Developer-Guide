@@ -25,11 +25,10 @@ export const authLogout = () => {
 
 export const authFail = error => ({ type: ActionTypes.AUTH_FAIL, error });
 
-export const checkAuthTimeout = expirationTime => dispatch => {
+export const checkAuthTimeout = expirationTime => dispatch =>
   setTimeout(() => dispatch(authLogout()), expirationTime);
-};
 
-export const auth = (email, password, isSignUp) => dispatch => {
+export const auth = (email, password, isSignUp) => async dispatch => {
   dispatch(authStart());
   const authData = {
     email,
@@ -40,7 +39,7 @@ export const auth = (email, password, isSignUp) => dispatch => {
   if (!isSignUp) {
     apiUrl = `${url}:signInWithPassword?key=${apiKey}`;
   }
-  axios
+  return axios
     .post(apiUrl, authData)
     .then(response => {
       const { expiresIn, idToken, localId } = response.data;
@@ -48,12 +47,10 @@ export const auth = (email, password, isSignUp) => dispatch => {
       localStorage.setItem("idToken", idToken);
       localStorage.setItem("expirationDate", expirationDate);
       localStorage.setItem("userId", localId);
-      dispatch(authSuccess(idToken, localId));
       dispatch(checkAuthTimeout(expiresIn * 1000));
+      return dispatch(authSuccess(idToken, localId));
     })
-    .catch(error => {
-      dispatch(authFail(error.response.data.error));
-    });
+    .catch(error => dispatch(authFail(error.response.data.error)));
 };
 
 export const setAuthRedirectPath = path => ({
@@ -61,21 +58,19 @@ export const setAuthRedirectPath = path => ({
   path
 });
 
-export const authCheckState = () => {
-  return dispatch => {
-    const idToken = localStorage.getItem("idToken");
-    if (!idToken) {
-      dispatch(authLogout());
+export const authCheckState = () => dispatch => {
+  const idToken = localStorage.getItem("idToken");
+  if (!idToken) {
+    return dispatch(authLogout());
+  } else {
+    const userId = localStorage.getItem("userId");
+    const expirationDate = new Date(localStorage.getItem("expirationDate"));
+    if (expirationDate > new Date()) {
+      const expiresIn = expirationDate.getTime() - new Date().getTime();
+      dispatch(checkAuthTimeout(expiresIn));
+      return dispatch(authSuccess(idToken, userId));
     } else {
-      const userId = localStorage.getItem("userId");
-      const expirationDate = new Date(localStorage.getItem("expirationDate"));
-      if (expirationDate > new Date()) {
-        const expiresIn = expirationDate.getTime() - new Date().getTime();
-        dispatch(authSuccess(idToken, userId));
-        dispatch(checkAuthTimeout(expiresIn));
-      } else {
-        dispatch(authLogout());
-      }
+      return dispatch(authLogout());
     }
-  };
+  }
 };
