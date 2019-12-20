@@ -63,6 +63,7 @@ describe("AuthActionCreators - async", () => {
   });
 
   afterEach(() => {
+    jest.runAllTimers();
     localStorage.clear();
     localStorage.getItem.mockRestore();
   });

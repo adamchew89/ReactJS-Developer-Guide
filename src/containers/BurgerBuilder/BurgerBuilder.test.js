@@ -41,15 +41,19 @@ describe("<BurgerBuilder />", () => {
     expect(wrapper.find("p")).toHaveLength(1);
   });
 
-  it("should render <BuildControls /> when receiving ingredients", () => {
+  it("should render <BuildControls /> and <OrderSummary /> when receiving ingredients", () => {
     wrapper.setProps({ ingredients: { [Ingredients.SALAD]: 0 } });
     wrapper.setState({ loading: false });
+    expect(wrapper.find(Spinner)).toHaveLength(0);
     expect(wrapper.find(BuildControls)).toHaveLength(1);
+    expect(wrapper.find(OrderSummary)).toHaveLength(1);
   });
 
-  it("should render two <Spinner /> if loading is true", () => {
+  it("should render two <Spinner /> if loading is true and <BuildControls /> and <OrderSummary /> should not render.", () => {
     wrapper.setState({ loading: true });
     expect(wrapper.find(Spinner)).toHaveLength(2);
+    expect(wrapper.find(BuildControls)).toHaveLength(0);
+    expect(wrapper.find(OrderSummary)).toHaveLength(0);
   });
 
   it("should set state purchasing to true if authenticated", () => {
@@ -67,5 +71,4 @@ describe("<BurgerBuilder />", () => {
     instance.purchaseCancelHandler();
     expect(instance.state.purchasing).toBeFalsy();
   });
-
 });

@@ -15,9 +15,9 @@ import Input from "../../../components/UI/Input/Input";
 // HOCs
 import withErrorHandler from "../../../hocs/withErrorHandler/withErrorHandler";
 // ActionCreators
-import * as OrderActionCreator from "../../../stores/actions/order-actions";
+import * as OrderActionCreator from "../../../stores/actions/order-action";
 
-class ContactData extends Component {
+export class ContactData extends Component {
   state = {
     formIsValid: false,
     orderForm: {
