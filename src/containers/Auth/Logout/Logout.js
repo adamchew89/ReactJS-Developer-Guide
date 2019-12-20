@@ -9,7 +9,7 @@ import * as AuthActionCreator from "../../../stores/actions/auth-action";
 // Containers
 // Components
 
-class Logout extends Component {
+export class Logout extends Component {
   componentDidMount() {
     const { onLogout } = this.props;
     onLogout();
@@ -20,9 +20,9 @@ class Logout extends Component {
   }
 }
 
-Logout.propTypes = { onLogout: PropTypes.func };
+Logout.propTypes = { onLogout: PropTypes.func.isRequired };
 
-Logout.defaultProps = { onLogout: () => {} };
+Logout.defaultProps = {};
 
 const mapDispatchToProps = dispatch => ({
   onLogout: () => dispatch(AuthActionCreator.authLogout())

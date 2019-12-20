@@ -7,12 +7,12 @@ import axios from "../../actions/axios-orders";
 // HOCs
 import withErrorHandler from "../../hocs/withErrorHandler/withErrorHandler";
 // Components
-import Order from "../../components/Order/Order/Order";
+import Order from "../../components/Order/Order";
 import Spinner from "../../components/UI/Spinner/Spinner";
 // ActionCreators
-import * as OrderActionCreator from "../../stores/actions/order-actions";
+import * as OrderActionCreator from "../../stores/actions/order-action";
 
-class Orders extends Component {
+export class Orders extends Component {
   componentDidMount() {
     const { fetchOrders, idToken, userId } = this.props;
     fetchOrders(idToken, userId);
@@ -35,6 +35,7 @@ class Orders extends Component {
 }
 
 Orders.propTypes = {
+  fetchOrders: PropTypes.func.isRequired,
   orders: PropTypes.array.isRequired,
   loading: PropTypes.bool,
   idToken: PropTypes.string,

@@ -4,7 +4,7 @@ import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 // Components
 import Order from "./Order";
-import * as Ingredients from "../../Burger/BurgerIngredient/BurgerIngredient";
+import * as Ingredients from "../Burger/BurgerIngredient/BurgerIngredient";
 
 // Configures enzyme to adapt to react16 via enzyme-adapter-react-16
 configure({ adapter: new Adapter() });
