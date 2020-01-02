@@ -9,6 +9,7 @@
 This repository was built with [Create React App](https://create-react-app.dev/) with the intention to act as a reference material for future Web Development with ReactJS.
 
 The project utilises the following technological stacks:
+
 |     Concept      | References                                                |
 | :--------------: | --------------------------------------------------------- |
 |      UI/UX       | [ReactJS](https://reactjs.org/)                           |
