@@ -15,7 +15,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
-class Auth extends Component {
+export class Auth extends Component {
   state = {
     formIsValid: false,
     authForm: {
@@ -131,7 +131,11 @@ class Auth extends Component {
         {errorMessage}
         <form onSubmit={this.submitHandler}>
           {form}
-          <Button btnType="Success" disabled={!formIsValid}>
+          <Button
+            btnType="Success"
+            disabled={!formIsValid}
+            clicked={this.submitHandler}
+          >
             SUBMIT
           </Button>
         </form>
@@ -144,16 +148,16 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
-  onAuth: PropTypes.func,
+  onAuth: PropTypes.func.isRequired,
+  onSetAuthRedirectPath: PropTypes.func.isRequired,
   loading: PropTypes.bool,
-  error: PropTypes.string,
+  error: PropTypes.object,
   isAuthenticated: PropTypes.bool,
   isBuildingBurger: PropTypes.bool,
   authRedirectPath: PropTypes.string
 };
 
 Auth.defaultProps = {
-  onAuth: () => {},
   loading: false,
   error: null,
   isAuthenticated: false,

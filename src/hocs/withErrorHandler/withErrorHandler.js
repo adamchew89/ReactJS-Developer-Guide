@@ -40,7 +40,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
       return (
         <Fragment>
           <Modal show={error !== null} modalClose={this.errorConfirmedHandler}>
-            {error ? error.message : <div></div>}
+            {error ? <div>{error.message}</div> : <div></div>}
           </Modal>
           <WrappedComponent {...this.props} />
         </Fragment>

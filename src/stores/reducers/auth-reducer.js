@@ -3,7 +3,7 @@ import * as ActionTypes from "../actions/action-types";
 // Utils
 import { updateObject } from "../../shared/utils/utils";
 
-const initialState = {
+export const initialState = {
   idToken: null,
   userId: null,
   error: null,

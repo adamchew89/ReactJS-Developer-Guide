@@ -8,7 +8,7 @@ import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSumm
 // Containers
 import ContactData from "./ContactData/ContactData";
 
-class Checkout extends Component {
+export class Checkout extends Component {
   checkoutCancelledHandler = () => {
     const { history } = this.props;
     history.goBack();
@@ -22,10 +22,8 @@ class Checkout extends Component {
   render() {
     const { match, ingredients, purchased } = this.props;
     let summary = <Redirect to="/" />;
-    if (ingredients) {
-      summary = purchased ? (
-        <Redirect to="/" />
-      ) : (
+    if (Object.keys(ingredients).length !== 0 && !purchased) {
+      summary = (
         <>
           <CheckoutSummary
             ingredients={ingredients}

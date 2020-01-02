@@ -78,7 +78,7 @@ const Input = props => {
 };
 
 Input.propTypes = {
-  changed: PropTypes.func,
+  changed: PropTypes.func.isRequired,
   elementConfig: PropTypes.object,
   elementType: PropTypes.string,
   value: PropTypes.string,
@@ -88,7 +88,6 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  changed: () => {},
   elementConfig: {},
   elementType: "",
   value: "",

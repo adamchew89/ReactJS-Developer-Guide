@@ -33,15 +33,13 @@ const OrderSummary = props => {
 
 OrderSummary.propTypes = {
   ingredients: PropTypes.object.isRequired,
-  price: PropTypes.number,
-  purchaseCancelled: PropTypes.func,
-  purchaseContinued: PropTypes.func
+  purchaseCancelled: PropTypes.func.isRequired,
+  purchaseContinued: PropTypes.func.isRequired,
+  price: PropTypes.number
 };
 
 OrderSummary.defaultProps = {
-  price: 0.0,
-  purchaseCancelled: () => {},
-  purchaseContinued: () => {}
+  price: 0.0
 };
 
 export default OrderSummary;

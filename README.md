@@ -1,68 +1,142 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# ReactJS Burger Builder
 
-## Available Scripts
+#### A ReactJS Development Reference Material
 
-In the project directory, you can run:
+##### By Adam Chew
 
-### `npm start`
+## Description
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This repository was built with [Create React App](https://create-react-app.dev/) with the intention to act as a reference material for future Web Development with ReactJS.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The project utilises the following technological stacks:
+|     Concept      | References                                                |
+| :--------------: | --------------------------------------------------------- |
+|      UI/UX       | [ReactJS](https://reactjs.org/)                           |
+|                  | [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) |
+|                  | [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)   |
+| State Management | [Redux](https://redux.js.org/)                            |
+|                  | [Redux-Thunk](https://github.com/reduxjs/redux-thunk)     |
+|     Testing      | [Jest](https://jestjs.io/)                                |
+|                  | [Enzyme](https://airbnb.io/enzyme/)                       |
 
-### `npm test`
+## Pre-requisites
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The following software should be installed prior to running the project.
 
-### `npm run build`
+| Concept         | References                       |
+| --------------- | -------------------------------- |
+| Dev Environment | [NodeJS](https://nodejs.org/en/) |
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The following software are recommended to be installed prior to running the project.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Concept        | References                                           |
+| -------------- | ---------------------------------------------------- |
+| IDE            | [Visual Studio Code](https://code.visualstudio.com/) |
+| Source Control | [GIT](https://git-scm.com/)                          |
 
-### `npm run eject`
+## Set-Up & Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### 1. Downloading/Checking out the repository.
+Download a zip file or checkout the project repository [here](https://github.com/adamchew89/BurgerBuilder) from a public Github repository.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 2. Install project dependencies via NPM.
+Run the following command in your preferred choice of command terminal:
+```
+cd ~/<project root>
+npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 3. Run the project on a development server.
+Run the following command:
+```
+npm run start
+```
+and you should see the following output on the terminal:
+```
+Compiled successfully!
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+You can now view burger-builder in the browser.
 
-## Learn More
+Local:            http://localhost:3000/
+On Your Network:  http://10.0.75.1:3000/
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+```
+Proceed to the url stated and you should have a running application of the Burger Builder.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Testing
 
-### Code Splitting
+### 1. Execute test runner.
+Run the following command:
+```
+npm run test -- --watchAll
+```
+and you should see the following output on the terminal:
+<details>
+<summary>View Output</summary>
+<code>
+> burger-builder@0.1.0 test C:\Users\uidn3250\Desktop\projects\repository\Personal\Web\React\BurgerBuilder
+> react-scripts test "--watchAll"
+ PASS  src/hocs/Layout/Layout.test.js (6.608s)
+ PASS  src/containers/Auth/Auth.test.js (6.904s)
+ PASS  src/components/Navigation/Toolbar/Toolbar.test.js (6.821s)
+ PASS  src/App.test.js (7.179s)
+...
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Test Suites: 36 passed, 36 total
+Tests:       127 passed, 127 total
+Snapshots:   0 total
+Time:        14.79s
+Ran all test suites.
+</code>
+</details>
 
-### Analyzing the Bundle Size
+### 2. Generate Code Coverage Report
+Run the following command:
+```
+npm run test -- --watchAll --coverage
+```
+and you should see the following output on the terminal:
+<details>
+<summary>View Output</summary>
+<code>
+> burger-builder@0.1.0 test C:\Users\uidn3250\Desktop\projects\repository\Personal\Web\React\BurgerBuilder
+> react-scripts test "--watchAll" "--coverage"
+ PASS  src/components/Navigation/SideDrawer/SideDrawer.test.js (6.215s)
+ PASS  src/components/Navigation/Toolbar/Toolbar.test.js (6.137s)
+ PASS  src/hocs/Layout/Layout.test.js (6.484s)
+...
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Test Suites: 36 passed, 36 total
+Tests:       127 passed, 127 total
+Snapshots:   0 total
+Time:        17.159s
+Ran all test suites.
+</code>
+</details>
 
-### Making a Progressive Web App
+and subsequently open the following file:
+```
+~/coverage/lcov-report/index.html
+```
+on a browser to view the generated coverage report.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+## Reference Guide
 
-### Advanced Configuration
+### Project Reference Breakdown
+| Item            | Reference          | Description                                                                                                                                                                |
+| --------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Components      | ~/src/components/  | Components are reusable components that focuses on rendering UIs and managing only its local state.                                                                        |
+| Containers      | ~/src/containers/  | Containers are usually project specific and focuses on managing application state and renders components.                                                                  |
+| Actions         | ~/src/actions/     | Actions are outward reaching functions. Examples: API calls.                                                                                                               |
+| HOCs            | ~/src/hocs/        | Higher Order Components (HOCs) are reusuable wrapping components or functions that introduces additional local states and/or component behaviours.                         |
+| utils           | ~/shared/utils     | Utils are reusuable functions. These functions are usually in javascripts and not ReactJS related. Examples: Regex, formatter, etc.                                        |
+| Stores          | ~/stores/          | Stores holds Action Creators and State Reducers.                                                                                                                           |
+| Action Creators | ~/stores/actions/  | Action Creators are functions that triggers a side effect.                                                                                                                 |
+| State Reducers  | ~/stores/reducers/ | State Reducers are functions that determines the application's state. They digest side effects triggered by Action Creators and updates the application state accordingly. |
+| Tests           | ~/**/*.test.js     | Test files contains the test specification for their respective components/containers/HOCs or functions.                                                                   |
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+###### Credits: Maximilian Schwarzmuller & Academind.com
 
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

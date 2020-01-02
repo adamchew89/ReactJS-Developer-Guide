@@ -25,13 +25,10 @@ const CheckoutSummary = props => {
 
 CheckoutSummary.propTypes = {
   ingredients: PropTypes.object.isRequired,
-  checkoutCancelled: PropTypes.func,
-  checkoutContinued: PropTypes.func
+  checkoutCancelled: PropTypes.func.isRequired,
+  checkoutContinued: PropTypes.func.isRequired
 };
 
-CheckoutSummary.defaultProps = {
-  checkoutCancelled: () => {},
-  checkoutContinued: () => {}
-};
+CheckoutSummary.defaultProps = {};
 
 export default CheckoutSummary;

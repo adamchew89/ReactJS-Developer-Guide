@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import axios from "../../actions/axios-orders";
 // Stores
 import * as BurgerBuilderActionCreator from "../../stores/actions/burger-builder-action";
-import * as OrderActionCreator from "../../stores/actions/order-actions";
+import * as OrderActionCreator from "../../stores/actions/order-action";
 import * as AuthActionCreator from "../../stores/actions/auth-action";
 // HOCs
 import withErrorHandler from "../../hocs/withErrorHandler/withErrorHandler";
@@ -72,7 +72,7 @@ export class BurgerBuilder extends Component {
     }
     let orderSummary = null;
     let burger = error ? <p>Ingredients cannot be loaded!</p> : <Spinner />;
-    if (ingredients) {
+    if (Object.keys(ingredients).length !== 0) {
       burger = (
         <Fragment>
           <Burger ingredients={ingredients} />
@@ -114,7 +114,11 @@ export class BurgerBuilder extends Component {
 }
 
 BurgerBuilder.propTypes = {
-  ingredients: PropTypes.shape().isRequired,
+  initIngredients: PropTypes.func.isRequired,
+  purchaseBurgerInit: PropTypes.func.isRequired,
+  onIngredientAdded: PropTypes.func.isRequired,
+  onIngredientRemoved: PropTypes.func.isRequired,
+  ingredients: PropTypes.object.isRequired,
   totalPrice: PropTypes.number.isRequired,
   error: PropTypes.bool,
   isAuthenticated: PropTypes.bool
