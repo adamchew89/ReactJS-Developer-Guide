@@ -16,7 +16,7 @@ const asyncCheckout  = asyncComponent(()=> import('./containers/Checkout/Checkou
 const asyncOrders  = asyncComponent(()=> import('./containers/Orders/Orders'));
 const asyncAuth  = asyncComponent(()=> import('./containers/Auth/Auth'));
 
-class App extends Component {
+export class App extends Component {
   componentDidMount() {
     const { onTryAutoSignIn } = this.props;
     onTryAutoSignIn();

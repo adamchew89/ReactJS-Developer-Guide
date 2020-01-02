@@ -1,9 +1,5 @@
 // Libraries
 import React, { Component } from "react";
-// CSS
-// Actions
-// Containers
-// Components
 
 const asyncComponent = importComponent =>
   class extends Component {
@@ -21,6 +17,7 @@ const asyncComponent = importComponent =>
       return C ? <C {...this.props} /> : null;
     }
   };
+
 asyncComponent.propTypes = {};
 
 asyncComponent.defaultProps = {};
