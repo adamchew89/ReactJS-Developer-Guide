@@ -16,9 +16,9 @@ import rootReducer from "./stores/reducers/reducer";
 
 // Middleware: Chrome Redux Dev Tool Extension
 const composeEnhancers =
-  process.env.NODE_ENV === "development"
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : null || compose;
+  (process.env.NODE_ENV === "development" &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose;
 
 // Initialise a Redux store
 const configuredStore = createStore(
