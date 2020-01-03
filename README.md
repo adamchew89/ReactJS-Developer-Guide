@@ -19,6 +19,7 @@ The project utilises the following technological stacks:
 |                  | [Redux-Thunk](https://github.com/reduxjs/redux-thunk)     |
 |     Testing      | [Jest](https://jestjs.io/)                                |
 |                  | [Enzyme](https://airbnb.io/enzyme/)                       |
+|   HTTP Client    | [Axios](https://github.com/axios/axios)                   |
 
 ## Pre-requisites
 
