@@ -127,17 +127,17 @@ on a browser to view the generated coverage report.
 ## Reference Guide
 
 ### Project Reference Breakdown
-| Item            | Reference          | Description                                                                                                                                                                |
-| --------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Components      | ~/src/components/  | Components are reusable components that focuses on rendering UIs and managing only its local state.                                                                        |
-| Containers      | ~/src/containers/  | Containers are usually project specific and focuses on managing application state and renders components.                                                                  |
-| Actions         | ~/src/actions/     | Actions are outward reaching functions. Examples: API calls.                                                                                                               |
-| HOCs            | ~/src/hocs/        | Higher Order Components (HOCs) are reusuable wrapping components or functions that introduces additional local states and/or component behaviours.                         |
-| utils           | ~/shared/utils     | Utils are reusuable functions. These functions are usually in javascripts and not ReactJS related. Examples: Regex, formatter, etc.                                        |
-| Stores          | ~/stores/          | Stores holds Action Creators and State Reducers.                                                                                                                           |
-| Action Creators | ~/stores/actions/  | Action Creators are functions that triggers a side effect.                                                                                                                 |
-| State Reducers  | ~/stores/reducers/ | State Reducers are functions that determines the application's state. They digest side effects triggered by Action Creators and updates the application state accordingly. |
-| Tests           | ~/**/*.test.js     | Test files contains the test specification for their respective components/containers/HOCs or functions.                                                                   |
+| Item            | Reference          | Description                                                                                                                                                                                    |
+| --------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Components      | ~/src/components/  | Components are reusable components that focuses on rendering UIs and managing only its local state. Examples: Show or hide 'Modal'.                                                            |
+| Containers      | ~/src/containers/  | Containers are usually project specific and focuses on managing application state and renders components. Examples: Managing a list of 'Ingredient' to be passed to multiple child components. |
+| Actions         | ~/src/actions/     | Actions are outward reaching functions. Examples: API calls.                                                                                                                                   |
+| HOCs            | ~/src/hocs/        | Higher Order Components (HOCs) are reusuable wrapping components or functions that introduces additional local states and/or component behaviours.                                             |
+| utils           | ~/shared/utils     | Utils are reusuable functions. These functions are usually in javascripts and not ReactJS related. Examples: Regex, formatter, etc.                                                            |
+| Stores          | ~/stores/          | Stores holds Action Creators and State Reducers.                                                                                                                                               |
+| Action Creators | ~/stores/actions/  | Action Creators are functions that triggers a side effect or triggers changes outside the scope of the calling function. In this case, it calls a state reducer into action.                   |
+| State Reducers  | ~/stores/reducers/ | State Reducers are functions that modifies the application's state. They digest side effects of Action Creators and updates the application state accordingly.                                 |
+| Tests           | ~/**/*.test.js     | Test files contains the test specification for their respective components/containers/HOCs or functions. Test suites act as a summary of the expect behaviours.                                |
 
 ###### Credits: Maximilian Schwarzmuller & Academind.com
 
